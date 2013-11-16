@@ -40,8 +40,14 @@ BooterGenerator.prototype.askFor = function askFor() {
 };
 
 BooterGenerator.prototype.app = function app() {
-  this.mkdir('app');
-  this.mkdir('app/server');
+  this.mkdir('server');
 
+  // index files
   this.copy('_package.json', 'package.json');
+  this.copy('_app.coffee', 'app.coffee');
+  this.copy('_Gruntfile.coffee', 'Gruntfile.coffee');
+  
+  // controllers
+  this.mkdir('server/controllers')
+  this.copy('_controllers/public_controller.coffee', 'server/controllers/public_controller.coffee')
 };
