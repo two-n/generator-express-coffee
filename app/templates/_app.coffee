@@ -9,7 +9,7 @@ app = express()
 app.configure ->
   # jade templates from templates dir
   app.use express.compress()
-  app.set 'views', "#{__dirname}/templates"
+  app.set 'views', "#{__dirname}/server/templates"
   app.set 'view engine', 'jade'
   
   # logging
@@ -17,5 +17,7 @@ app.configure ->
   
 app.get '/', publicController.index
 
-module.exports = app
+# TEMP
+# module.exports = app
+app.listen 3000
   

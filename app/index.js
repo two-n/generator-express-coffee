@@ -48,6 +48,11 @@ BooterGenerator.prototype.app = function app() {
   this.copy('_Gruntfile.coffee', 'Gruntfile.coffee');
   
   // controllers
-  this.mkdir('server/controllers')
-  this.copy('_controllers/public_controller.coffee', 'server/controllers/public_controller.coffee')
+  this.mkdir('server/controllers');
+  this.copy('_controllers/public_controller.coffee', 'server/controllers/public_controller.coffee');
+  
+  // templates
+  this.mkdir('server/templates');
+  this.mkdir('server/templates/public');
+  this.copy('_templates/public/index.jade', 'server/templates/public/index.jade');
 };
