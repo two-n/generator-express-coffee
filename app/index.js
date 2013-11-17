@@ -57,16 +57,21 @@ BooterGenerator.prototype.app = function app() {
   // *** SERVER ***
   this.mkdir('server');
   
-  // controllers
-  this.mkdir('server/controllers');
-  this.copy('_controllers/public_controller.coffee', 'server/controllers/public_controller.coffee');
+  // models
+  this.mkdir('server/models');
   
-  // templates
+  // templates AKA views
   this.mkdir('server/templates');
   this.mkdir('server/templates/public');
   this.copy('_templates/public/index.jade', 'server/templates/public/index.jade');
   
-  // models
+  // controllers
+  this.mkdir('server/controllers');
+  this.copy('_controllers/public_controller.coffee', 'server/controllers/public_controller.coffee');
+  
+  //  *** AUTH *** could maybe be separate generator
+  this.copy('_controllers/auth_controller.coffee', 'server/controllers/auth_controller.coffee');
+  this.copy('_models/user.coffee', 'server/models/user.coffee');
   
   // *** CLIENT ***
   this.mkdir('client');

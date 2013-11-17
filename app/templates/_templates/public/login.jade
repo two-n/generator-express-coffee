@@ -1,0 +1,21 @@
+!!!
+html
+  head
+    link(href="/assets/stylesheets/main.css", rel='stylesheet', type='text/css')
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+
+    body
+      #wrap
+        .container
+          .row.l_left-row
+            .col-md-12
+              h1 public#login
+
+          .row.l_title-container.s_title-container.l_left-row
+            .col-md-12
+              form.l_gatekeeper-form.s_gatekeeper-form(action='/login', method='post')
+                h1.l_gatekeeper-header Login
+                input.l_gatekeeper-input(type='text', name='username', class='t_username', placeholder='username')
+                input.l_gatekeeper-input(type='password', name='password', class='t_password', placeholder='password')
+                input.l_gatekeeper-button(type='submit', value='Log In', name='login', class='t_login btn')
+                a.l_signup-link.s_signup-link(href='/signup') Sign Up
