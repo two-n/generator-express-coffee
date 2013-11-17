@@ -78,7 +78,9 @@ BooterGenerator.prototype.app = function app() {
   
   // stylus
   this.mkdir('client/less');
+  this.copy('_client/less/main.less', 'client/stylus/main.less');
   this.mkdir('client/less/vendor');
   this.copy('_client/less/vendor/bootstrap.less', 'client/stylus/vendor/bootstrap.less');
+    this.copy('_client/less/gatekeeper.less', 'client/stylus/gatekeeper.less');
   
 };
