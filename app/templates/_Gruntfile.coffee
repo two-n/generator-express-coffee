@@ -8,14 +8,14 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-contrib-jade'
-  grunt.loadNpmTasks 'grunt-contrib-stylus'
+  grunt.loadNpmTasks 'grunt-contrib-less'
   grunt.loadNpmTasks 'grunt-contrib-copy'
   grunt.loadNpmTasks 'grunt-contrib-clean'
   grunt.loadNpmTasks 'grunt-mocha-test'
   grunt.loadNpmTasks 'grunt-env'
   
-  BUILD_PATH = 'build'
-  APP_PATH = 'app'
+  BUILD_PATH = 'server/client_build'
+  APP_PATH = 'client'
   DEV_BUILD_PATH = "#{BUILD_PATH}/development"
   JS_DEV_BUILD_PATH = "#{DEV_BUILD_PATH}/js"
   PRODUCTION_BUILD_PATH = "#{BUILD_PATH}/production"
@@ -44,21 +44,28 @@ module.exports = (grunt) ->
         options:
           server: './app'
           port: 3000
-          
-    # watch:
-    #  # coffee:
-    #  #   files: ["#{APP_PATH}/coffee/*.coffee", "#{APP_PATH}/coffee/*/*.coffee","#{APP_PATH}/coffee/*/*/*.coffee"]
-    #  #   tasks: 'coffee:development'
-    #  # stylus:
-    #  #   files: ["#{APP_PATH}/stylus/*.styl", "#{APP_PATH}/stylus/*/*.styl"]
-    #  #   tasks: 'stylus:development'
-    #  # jade:
-    #  #   files: ["#{APP_PATH}/index.jade", "#{APP_PATH}/partials/*.jade", "#{APP_PATH}/partials/**/*.jade"]
-    #  #   tasks: ['jade:development', 'clientTemplates']          
+     
+    # build CSS with stylus
+    # build CSS with stylus
+    less:
+      development:
+        files:
+          "server/client_build/development/stylesheets/main.css": "client/stylus/main.less"
+        options:
+          paths: ["#{APP_PATH}/stylus"]
+    
+    watch:
+      stylus:
+        files: ["#{APP_PATH}/stylus/*.styl", "#{APP_PATH}/stylus/*/*.styl"]
+        tasks: 'stylus:development' 
+    
+  grunt.registerTask 'development', [
+    'less:development'
+  ]     
         
   grunt.registerTask 'default', [
     # 'env:development'
-    # 'development'
+    'development'
     'express:development'
-    # 'watch'
+    'watch'
   ]      

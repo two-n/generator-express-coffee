@@ -25,12 +25,20 @@ BooterGenerator.prototype.askFor = function askFor() {
   // have Yeoman greet the user.
   console.log(this.yeoman);
 
-  var prompts = [{
-    type: 'confirm',
-    name: 'someOption',
-    message: 'Would you like to enable this option?',
-    default: true
-  }];
+  var prompts = [
+    // {
+    //   type: 'confirm',
+    //   name: 'useMongoose',
+    //   message: 'Would you like to use mongoose for your database?',
+    //   default: true
+    // },
+    // {
+    //   type: 'confirm',
+    //   name: 'addLogin',
+    //   message: 'Would you like to add user login?  Warning:  I will need to create a user object in your db.  I can only do this if you have a db enabled.',
+    //   default: true
+    // }
+  ];
 
   this.prompt(prompts, function (props) {
     this.someOption = props.someOption;
@@ -40,12 +48,14 @@ BooterGenerator.prototype.askFor = function askFor() {
 };
 
 BooterGenerator.prototype.app = function app() {
-  this.mkdir('server');
 
-  // index files
+  // *** BASIC FILES ***
   this.copy('_package.json', 'package.json');
-  this.copy('_app.coffee', 'app.coffee');
+  this.copy('_app.coffee', 'app.coffee'); // app file AKA The Queen Bee
   this.copy('_Gruntfile.coffee', 'Gruntfile.coffee');
+  
+  // *** SERVER ***
+  this.mkdir('server');
   
   // controllers
   this.mkdir('server/controllers');
@@ -55,4 +65,15 @@ BooterGenerator.prototype.app = function app() {
   this.mkdir('server/templates');
   this.mkdir('server/templates/public');
   this.copy('_templates/public/index.jade', 'server/templates/public/index.jade');
+  
+  // models
+  
+  // *** CLIENT ***
+  this.mkdir('client');
+  
+  // stylus
+  this.mkdir('client/less');
+  this.mkdir('client/less/vendor');
+  this.copy('_client/less/vendor/bootstrap.less', 'client/stylus/vendor/bootstrap.less');
+  
 };

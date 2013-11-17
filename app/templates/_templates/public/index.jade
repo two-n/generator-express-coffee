@@ -1,5 +1,21 @@
-h1 Good Evening Everyone
-p
-  | and welcome to the app
-  | that you probably downloaded on your
-  | PC or your Mac.
+!!!
+html
+  head
+    title App
+    link(href="/assets/stylesheets/main.css", rel='stylesheet', type='text/css')
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+
+  body
+    #wrap
+      .container
+        .row.l_left-row
+          .col-md-12
+            h1 public#index
+
+        .row.l_title-container.s_title-container.l_left-row
+          .col-md-12
+            p You can edit me in server/templates/public/index.jade
+            
+    #footer
+      .container.l_footer-container.s_footer-container
+        p &copy;2014 Abraham Lincoln: Web Developer
