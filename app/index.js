@@ -27,9 +27,14 @@ BooterGenerator.prototype.askFor = function askFor() {
 
   var prompts = [
     // {
+    //   name: 'applicationName',
+    //   message: 'What do you want to call your app?'
+    // },
+    // {
     //   type: 'confirm',
     //   name: 'useMongoose',
-    //   message: 'Would you like to use mongoose for your database?',
+    //   message: "Would you like your app to have a MongoDB database? Answering 'yes' will  
+    //   connect your app to a database with Mongoose.  Answering 'no' will do nothing, and make no database.",
     //   default: true
     // },
     // {
@@ -41,7 +46,7 @@ BooterGenerator.prototype.askFor = function askFor() {
   ];
 
   this.prompt(prompts, function (props) {
-    this.someOption = props.someOption;
+    this.useMongoose = props.useMongoose;
 
     cb();
   }.bind(this));
@@ -72,6 +77,8 @@ BooterGenerator.prototype.app = function app() {
   //  *** AUTH *** could maybe be separate generator
   this.copy('_controllers/auth_controller.coffee', 'server/controllers/auth_controller.coffee');
   this.copy('_models/user.coffee', 'server/models/user.coffee');
+  this.copy('_templates/public/login.jade', 'server/templates/public/login.jade');
+  this.copy('_templates/public/signup.jade', 'server/templates/public/signup.jade');
   
   // *** CLIENT ***
   this.mkdir('client');
@@ -81,6 +88,6 @@ BooterGenerator.prototype.app = function app() {
   this.copy('_client/less/main.less', 'client/stylus/main.less');
   this.mkdir('client/less/vendor');
   this.copy('_client/less/vendor/bootstrap.less', 'client/stylus/vendor/bootstrap.less');
-    this.copy('_client/less/gatekeeper.less', 'client/stylus/gatekeeper.less');
+  this.copy('_client/less/gatekeeper.less', 'client/stylus/gatekeeper.less');
   
 };

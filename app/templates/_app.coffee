@@ -4,7 +4,7 @@ mongoose = require 'mongoose'
 
 ASSET_BUILD_PATH = 'server/client_build/development'
 PORT = process.env.PORT ? 3000
-MONGO_URL = process.env.MONGO_URL ? 'mongodb://localhost/my-great-app'
+MONGO_URL = process.env.MONGO_URL ? 'mongodb://localhost/my-great-app2'
 SESSION_SECRET = process.env.SESSION_SECRET ? 'keyboard kitty'
 WHITELISTED_URLS = ['/', '/login', '/signup']
 
