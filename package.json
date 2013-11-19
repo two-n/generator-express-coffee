@@ -8,11 +8,11 @@
     "express",
     "passport"
   ],
-  "homepage": "https://github.com/ragingsquirrel3/generator-booter",
-  "bugs": "https://github.com/ragingsquirrel3/generator-booter/issues",
+  "homepage": "https://github.com/two-n/generator-express-coffee",
+  "bugs": "https://github.com/two-n/generator-express-coffee/issues",
   "author": {
-    "name": "",
-    "email": "",
+    "name": "Travis Sheppard",
+    "email": "travis@two-n.com",
     "url": "https://github.com/ragingsquirrel3"
   },
   "main": "app/index.js",
