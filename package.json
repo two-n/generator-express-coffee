@@ -1,10 +1,12 @@
 {
-  "name": "generator-booter",
+  "name": "generator-express-coffee",
   "version": "0.0.1",
-  "description": "A generator for Yeoman",
-  "private": true,
+  "description": "A Yeoman generator that makes a boilerplate express app, in CoffeeScript, with passport login.",
+  "private": false,
   "keywords": [
-    "yeoman-generator"
+    "yeoman-generator",
+    "express",
+    "passport"
   ],
   "homepage": "https://github.com/ragingsquirrel3/generator-booter",
   "bugs": "https://github.com/ragingsquirrel3/generator-booter/issues",
