@@ -1,0 +1,33 @@
+!!!
+html
+  head
+    title App
+    link(href="/assets/stylesheets/main.css", rel='stylesheet', type='text/css')
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+
+  body
+    #wrap
+      .container
+        .row
+          .col-md-2
+            ul.nav.nav-pills.nav-stacked
+              li
+               a Users
+              li
+               a Global Settings
+          .col-md-10
+            h1 Users
+            p Admin stuff
+            table.table.table-striped
+              thead
+                td Username
+                td Actions
+              tbody
+                for user in users
+                  tr
+                    td=  user.username
+                    td Foo
+          
+    #footer
+      .container.l_footer-container.s_footer-container
+        p &copy;2014 Abraham Lincoln: Web Developer

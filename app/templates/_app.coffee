@@ -6,18 +6,22 @@ ASSET_BUILD_PATH = 'server/client_build/development'
 PORT = process.env.PORT ? 3000
 MONGO_URL = process.env.MONGO_URL ? 'mongodb://localhost/my-great-app2'
 SESSION_SECRET = process.env.SESSION_SECRET ? 'keyboard kitty'
-WHITELISTED_URLS = ['/', '/login', '/signup']
+WHITELISTED_URLS = ['/login', '/signup', '/favicon.ico']
 
 # connect MongoDB
 mongoose.connect MONGO_URL
 
 # controllers
 publicController = require './server/controllers/public_controller'
+adminController = require './server/controllers/admin_controller'
 authController = require './server/controllers/auth_controller'
 
 # login unless route in WHITELISTED_URLS
+# if not authorized, save the url in session and redirect to login
 ensureAuthenticated = (req, res, next) ->
-  return res.redirect '/login' unless req.user || req.url in WHITELISTED_URLS
+  unless req.user || req.url in WHITELISTED_URLS
+    req.session.authRedirectUrl = req.url
+    return res.redirect '/login'
   next()
 
 app = express()
@@ -40,7 +44,7 @@ app.configure ->
   app.use ensureAuthenticated
   
   # logging
-  app.use express.logger()
+  # app.use express.logger()
   
 # public routes
 app.get '/', publicController.index
@@ -51,6 +55,9 @@ app.post '/signup', authController.createRegistration
 app.get '/login', authController.newSession
 app.post '/login', authController.createSession
 app.get '/logout', authController.destroySession
+
+# admin routes
+app.get '/admin', adminController.index
 
 # TEMP
 module.exports = app

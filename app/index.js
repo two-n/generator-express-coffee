@@ -26,27 +26,28 @@ BooterGenerator.prototype.askFor = function askFor() {
   console.log(this.yeoman);
 
   var prompts = [
-    // {
-    //   name: 'applicationName',
-    //   message: 'What do you want to call your app?'
-    // },
-    // {
-    //   type: 'confirm',
-    //   name: 'useMongoose',
-    //   message: "Would you like your app to have a MongoDB database? Answering 'yes' will  
-    //   connect your app to a database with Mongoose.  Answering 'no' will do nothing, and make no database.",
-    //   default: true
-    // },
-    // {
-    //   type: 'confirm',
-    //   name: 'addLogin',
-    //   message: 'Would you like to add user login?  Warning:  I will need to create a user object in your db.  I can only do this if you have a db enabled.',
-    //   default: true
-    // }
+    {
+      name: 'applicationName',
+      message: 'What do you want to call your app?',
+      default: 'my_cool_app'
+    },
+    {
+      type: 'confirm',
+      name: 'useMongoose',
+      message: "Would you like your app to have a MongoDB database? Answering 'yes' will connect your app to a database with Mongoose.  Answering 'no' will do nothing, and make no database.",
+      default: true
+    },
+    {
+      type: 'confirm',
+      name: 'useAuth',
+      message: 'Would you like to add admin & user login?  Warning:  I will need to create a user object in your db.  I can only do this if you have a db enabled.',
+      default: true
+    }
   ];
 
   this.prompt(prompts, function (props) {
     this.useMongoose = props.useMongoose;
+    this.useAuth = props.useAuth;
 
     cb();
   }.bind(this));
@@ -75,10 +76,18 @@ BooterGenerator.prototype.app = function app() {
   this.copy('_controllers/public_controller.coffee', 'server/controllers/public_controller.coffee');
   
   //  *** AUTH *** could maybe be separate generator
-  this.copy('_controllers/auth_controller.coffee', 'server/controllers/auth_controller.coffee');
-  this.copy('_models/user.coffee', 'server/models/user.coffee');
-  this.copy('_templates/public/login.jade', 'server/templates/public/login.jade');
-  this.copy('_templates/public/signup.jade', 'server/templates/public/signup.jade');
+  if (this.useAuth) {
+    // basic auth and login
+    this.copy('_controllers/auth_controller.coffee', 'server/controllers/auth_controller.coffee');
+    this.copy('_models/user.coffee', 'server/models/user.coffee');
+    this.copy('_templates/public/login.jade', 'server/templates/public/login.jade');
+    this.copy('_templates/public/signup.jade', 'server/templates/public/signup.jade');
+    
+    // admin stuff
+    this.copy('_controllers/admin_controller.coffee', 'server/controllers/admin_controller.coffee');
+    this.mkdir('server/templates/admin');
+    this.template('_templates/admin/index.jade', 'server/templates/admin/index.jade');
+  }
   
   // *** CLIENT ***
   this.mkdir('client');

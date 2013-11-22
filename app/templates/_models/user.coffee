@@ -12,6 +12,12 @@ UserSchema = new Schema
   password:
     type: String
     required: true
+  status:
+    type: String
+    default: 'user' # [banned, user, admin, god]
+  isAdmin:
+    type: Boolean
+    default: false
 
 UserSchema.pre 'save', (next) ->
   user = @
@@ -29,5 +35,7 @@ UserSchema.methods.comparePassword = (candidatePassword, cb) ->
   bcrypt.compare candidatePassword, @password, (err, isMatch) ->
     if err then return cb err
     cb null, isMatch
+    
+# UserSchema.methods.makeAdmin    
 
 module.exports = mongoose.model 'User', UserSchema
