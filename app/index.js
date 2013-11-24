@@ -30,7 +30,7 @@ BooterGenerator.prototype.askFor = function askFor() {
     {
       type: 'confirm',
       name: 'useAuth',
-      message: 'Would you like to add admin & user login?  Warning:  I will need to create a user object in your db.  I can only do this if you have a db enabled.',
+      message: 'Would you like to add authorized user login?  Answering yes enable passport login to an authorized /account page',
       default: true
     }
   ];
