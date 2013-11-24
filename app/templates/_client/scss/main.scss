@@ -1,6 +1,5 @@
-/* bootstrap */
-@import "vendor/bootstrap.less";
-@import "gatekeeper.less";
+@import "vendor/bootstrap.scss";
+@import "gatekeeper.scss";
 
 html, body {
   height: 100%;
@@ -11,7 +10,7 @@ html, body {
   height: auto !important;
   height: 100%;
   margin: 0 auto -45px;
-  padding: 0 0 45px;
+  padding: 50px 0 45px;
 }
 
 #footer {

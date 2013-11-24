@@ -7,6 +7,9 @@ publicController.index = (req, res) ->
     res.redirect req.session.authRedirectUrl
     req.session.authRedirectUrl = null
   else
-    res.render 'public/index' 
+    res.render 'public/index'
+    
+publicController.about = (req, res) ->    
+  res.render 'public/about'    
 
 module.exports = publicController

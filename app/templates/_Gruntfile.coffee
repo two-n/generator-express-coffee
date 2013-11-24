@@ -8,7 +8,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-contrib-jade'
-  grunt.loadNpmTasks 'grunt-contrib-less'
+  grunt.loadNpmTasks 'grunt-contrib-sass'
   grunt.loadNpmTasks 'grunt-contrib-copy'
   grunt.loadNpmTasks 'grunt-contrib-clean'
   grunt.loadNpmTasks 'grunt-mocha-test'
@@ -44,23 +44,22 @@ module.exports = (grunt) ->
         options:
           server: './app'
           port: 3000
-     
-    # build CSS with stylus
-    # build CSS with stylus
-    less:
+    
+    sass:
       development:
         files:
-          "server/client_build/development/stylesheets/main.css": "client/stylus/main.less"
-        options:
-          paths: ["#{APP_PATH}/stylus"]
+          "server/client_build/development/stylesheets/main.css": "client/scss/main.scss"
     
     watch:
-      stylus:
-        files: ["#{APP_PATH}/stylus/*.styl", "#{APP_PATH}/stylus/*/*.styl"]
-        tasks: 'stylus:development' 
+      sass:
+        files: ["client/scss/*.scss"]
+        tasks: 'sass:development' 
+      coffee:
+        files: "#{SERVER_PATH}/*.coffee"
+        tasks: 'express:development'
     
   grunt.registerTask 'development', [
-    'less:development'
+    'sass:development'
   ]     
         
   grunt.registerTask 'default', [
@@ -68,4 +67,4 @@ module.exports = (grunt) ->
     'development'
     'express:development'
     'watch'
-  ]      
+  ]

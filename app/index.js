@@ -2,6 +2,7 @@
 var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
+var _ = require('underscore');
 
 
 var BooterGenerator = module.exports = function BooterGenerator(args, options, config) {
@@ -27,17 +28,6 @@ BooterGenerator.prototype.askFor = function askFor() {
 
   var prompts = [
     {
-      name: 'applicationName',
-      message: 'What do you want to call your app?',
-      default: 'my_cool_app'
-    },
-    {
-      type: 'confirm',
-      name: 'useMongoose',
-      message: "Would you like your app to have a MongoDB database? Answering 'yes' will connect your app to a database with Mongoose.  Answering 'no' will do nothing, and make no database.",
-      default: true
-    },
-    {
       type: 'confirm',
       name: 'useAuth',
       message: 'Would you like to add admin & user login?  Warning:  I will need to create a user object in your db.  I can only do this if you have a db enabled.',
@@ -46,7 +36,6 @@ BooterGenerator.prototype.askFor = function askFor() {
   ];
 
   this.prompt(prompts, function (props) {
-    this.useMongoose = props.useMongoose;
     this.useAuth = props.useAuth;
 
     cb();
@@ -56,8 +45,13 @@ BooterGenerator.prototype.askFor = function askFor() {
 BooterGenerator.prototype.app = function app() {
 
   // *** BASIC FILES ***
-  this.copy('_package.json', 'package.json');
-  this.copy('_app.coffee', 'app.coffee'); // app file AKA The Queen Bee
+  this.template('_package.json', 'package.json', {
+    name: this.appname
+  });
+  this.template('_app.coffee', 'app.coffee', {
+    defaultDbConnectionPath: this.appname,
+    useAuth: this.useAuth
+  });
   this.copy('_Gruntfile.coffee', 'Gruntfile.coffee');
   
   // *** SERVER ***
@@ -69,6 +63,7 @@ BooterGenerator.prototype.app = function app() {
   // templates AKA views
   this.mkdir('server/templates');
   this.mkdir('server/templates/public');
+  this.copy('_templates/public/layout.jade', 'server/templates/public/layout.jade');
   this.copy('_templates/public/index.jade', 'server/templates/public/index.jade');
   
   // controllers
@@ -83,20 +78,21 @@ BooterGenerator.prototype.app = function app() {
     this.copy('_templates/public/login.jade', 'server/templates/public/login.jade');
     this.copy('_templates/public/signup.jade', 'server/templates/public/signup.jade');
     
-    // admin stuff
-    this.copy('_controllers/admin_controller.coffee', 'server/controllers/admin_controller.coffee');
-    this.mkdir('server/templates/admin');
-    this.template('_templates/admin/index.jade', 'server/templates/admin/index.jade');
+    // account
+    this.copy('_controllers/account_controller.coffee', 'server/controllers/account_controller.coffee');
+    this.mkdir('server/templates/account');
+    this.copy('_templates/account/layout.jade', 'server/templates//account/layout.jade');
+    this.copy('_templates/account/index.jade', 'server/templates//account/index.jade');
   }
   
   // *** CLIENT ***
   this.mkdir('client');
   
-  // stylus
-  this.mkdir('client/less');
-  this.copy('_client/less/main.less', 'client/stylus/main.less');
-  this.mkdir('client/less/vendor');
-  this.copy('_client/less/vendor/bootstrap.less', 'client/stylus/vendor/bootstrap.less');
-  this.copy('_client/less/gatekeeper.less', 'client/stylus/gatekeeper.less');
+  // sass
+  this.mkdir('client/scss');
+  this.copy('_client/scss/main.scss', 'client/scss/main.scss');
+  this.mkdir('client/scss/vendor');
+  this.copy('_client/scss/vendor/bootstrap.scss', 'client/scss/vendor/bootstrap.scss');
+  this.copy('_client/scss/gatekeeper.scss', 'client/scss/gatekeeper.scss');
   
 };
