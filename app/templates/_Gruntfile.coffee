@@ -25,10 +25,6 @@ module.exports = (grunt) ->
   
     # run tests with mocha test, mocha test:unit, or mocha test:controllers
     mochaTest:
-      unit:
-        options:
-          reporter: 'spec'
-        src: ['test/unit/*']
       controllers:
         options:
           reporter: 'spec'
@@ -57,6 +53,12 @@ module.exports = (grunt) ->
       coffee:
         files: "#{SERVER_PATH}/*.coffee"
         tasks: 'express:development'
+        
+  grunt.registerTask 'test', [
+    'development'
+    'express:test'
+    'mochaTest:controllers'
+  ]
     
   grunt.registerTask 'development', [
     'sass:development'

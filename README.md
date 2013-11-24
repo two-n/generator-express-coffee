@@ -29,6 +29,10 @@ Start your app in development environment on port 3000
 
     $ grunt
     
+Run Mocha tests with
+
+    $ grunt test
+    
 Happy Coding!
 
 ## License

@@ -95,4 +95,8 @@ BooterGenerator.prototype.app = function app() {
   this.copy('_client/scss/vendor/bootstrap.scss', 'client/scss/vendor/bootstrap.scss');
   this.copy('_client/scss/gatekeeper.scss', 'client/scss/gatekeeper.scss');
   
+  // *** TESTS ***
+  this.mkdir('test');
+  this.mkdir('test/controllers');
+  this.copy('_test/controllers/public_test.coffee', 'test/controllers/public_test.coffee');
 };
