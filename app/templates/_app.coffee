@@ -13,6 +13,9 @@ mongoose.connect MONGO_URL
 
 # controllers
 publicController = require './server/controllers/public_controller'
+
+<% if (useAuth) { %>
+# some controllers for admin/auth
 accountController = require './server/controllers/account_controller'
 authController = require './server/controllers/auth_controller'
 
@@ -24,6 +27,7 @@ ensureAuthenticated = (req, res, next) ->
     return res.redirect '/login'
   next()
 
+<% } %>  
 app = express()
 app.configure ->
   # jade templates from templates dir
@@ -34,6 +38,7 @@ app.configure ->
   # serve static assets
   app.use('/assets', express.static("#{__dirname}/#{ASSET_BUILD_PATH}"))
   
+  <% if (useAuth) { %>
   # needed for body parsing and session usage
   app.use express.cookieParser()
   app.use express.bodyParser()
@@ -42,7 +47,8 @@ app.configure ->
   app.use passport.session()
   # assigin login rules after assigning static route
   app.use ensureAuthenticated
-  
+
+  <% } %> 
   # logging
   app.use express.logger()
   
@@ -50,6 +56,7 @@ app.configure ->
 app.get '/', publicController.index
 app.get '/about', publicController.about
 
+<% if (useAuth) { %>
 # auth routes
 app.get '/signup', authController.newRegistration
 app.post '/signup', authController.createRegistration
@@ -60,4 +67,5 @@ app.get '/logout', authController.destroySession
 # account routes
 app.get '/account', accountController.index
 
+<% } %> 
 module.exports = app
