@@ -53,6 +53,7 @@ BooterGenerator.prototype.app = function app() {
     useAuth: this.useAuth
   });
   this.copy('_Gruntfile.coffee', 'Gruntfile.coffee');
+  this.copy('_gitignore', '.gitignore');
   
   // *** SERVER ***
   this.mkdir('server');
@@ -86,17 +87,8 @@ BooterGenerator.prototype.app = function app() {
   }
   
   // *** CLIENT ***
-  this.mkdir('client');
-  
-  // sass
-  this.mkdir('client/scss');
-  this.copy('_client/scss/main.scss', 'client/scss/main.scss');
-  this.mkdir('client/scss/vendor');
-  this.copy('_client/scss/vendor/bootstrap.scss', 'client/scss/vendor/bootstrap.scss');
-  this.copy('_client/scss/gatekeeper.scss', 'client/scss/gatekeeper.scss');
+  this.directory('_client', 'client');
   
   // *** TESTS ***
-  this.mkdir('test');
-  this.mkdir('test/controllers');
-  this.copy('_test/controllers/public_test.coffee', 'test/controllers/public_test.coffee');
+  this.directory('_test', 'test');
 };

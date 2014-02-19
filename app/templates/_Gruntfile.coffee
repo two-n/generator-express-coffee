@@ -22,6 +22,32 @@ module.exports = (grunt) ->
   SERVER_PATH = "server"
   
   grunt.initConfig
+
+    clean:
+      development: [DEV_BUILD_PATH]
+      production: [PRODUCTION_BUILD_PATH]
+
+    coffee:
+      development:
+        options:
+          sourceMap: true
+        files: [
+          expand: true
+          cwd: "#{APP_PATH}/coffee"
+          dest: "#{DEV_BUILD_PATH}/js"
+          src: ["*.coffee", "**/*.coffee"]
+          ext: ".js"
+        ]
+
+    copy:
+      development:
+        files: [
+          { expand: true, cwd: "#{APP_PATH}/public", src:['**'], dest: DEV_BUILD_PATH }
+        ]
+      # production:
+      #   files: [
+      #     { expand: true, cwd: DEV_BUILD_PATH, src:['**'], dest: PRODUCTION_BUILD_PATH },
+      #   ]
   
     # run tests with mocha test, mocha test:unit, or mocha test:controllers
     mochaTest:
@@ -48,11 +74,11 @@ module.exports = (grunt) ->
     
     watch:
       sass:
-        files: ["client/scss/*.scss"]
+        files: ["client/scss/**/*.scss"]
         tasks: 'sass:development' 
       coffee:
-        files: "#{SERVER_PATH}/*.coffee"
-        tasks: 'express:development'
+        files: "client/coffee/**/*.coffee"
+        tasks: 'coffee:development'
         
   grunt.registerTask 'test', [
     'development'
@@ -61,7 +87,10 @@ module.exports = (grunt) ->
   ]
     
   grunt.registerTask 'development', [
+    'clean:development'
+    'copy:development'
     'sass:development'
+    'coffee:development'
   ]     
         
   grunt.registerTask 'default', [

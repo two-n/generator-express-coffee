@@ -1,0 +1,5 @@
+*.DS_Store
+server/client_build/*
+node_modules/*
+*.log
+.sass-cache/*
