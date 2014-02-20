@@ -12,6 +12,8 @@ UserSchema = new Schema
   password:
     type: String
     required: true
+  lastLogin:
+    type: Date
   status:
     type: String
     default: 'user' # [banned, user, admin, god]
@@ -35,7 +37,35 @@ UserSchema.methods.comparePassword = (candidatePassword, cb) ->
   bcrypt.compare candidatePassword, @password, (err, isMatch) ->
     if err then return cb err
     cb null, isMatch
-    
-# UserSchema.methods.makeAdmin    
+
+# cb(err)
+UserSchema.methods.updateLastLoginTime = (cb) ->
+  @lastLogin = new Date
+  @save cb
+
+# does not save
+UserSchema.methods.makeAdmin = ->
+  @status = 'admin'
+  @isAdmin = true
+
+# does not save
+UserSchema.methods.revokeAdmin = ->
+  @status = 'user'
+  @isAdmin = false
+
+# If the user is not an admin, makeAdmin and save.
+# If an admin (and not the only one), revokeAdmin and save
+# cb(err)
+UserSchema.methods.toggleAdminAndSave = (cb) ->
+  if @isAdmin
+    @model('User').count { isAdmin: true }, (err, adminCount) =>
+      if adminCount <= 1
+        cb new Error 'This user is the only admin.  There must be at least one admin.'
+      else
+        @revokeAdmin()
+        @save cb
+  else
+    @makeAdmin()
+    @save cb
 
 module.exports = mongoose.model 'User', UserSchema

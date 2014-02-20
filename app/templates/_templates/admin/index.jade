@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  table.table.table-striped
+    thead
+      tr
+        th Username
+        th Last Login
+        th Status
+        th
+    tbody
+      for user in users
+        tr
+          td= user.username
+          td= user.lastLogin
+          td= user.status
+          td
+            a.btn.btn-info(href="/admin/account/#{user.id}") Info
+            //- .btn-group
+            //-   a.btn.btn-default Info
+            //-   a.btn.btn-default Edit Password
+            //-   a.btn.btn-warning Toggle Admin
+            //-   a.btn.btn-danger Delete

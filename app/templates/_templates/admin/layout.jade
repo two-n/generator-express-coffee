@@ -1,0 +1,37 @@
+!!!
+html
+  head
+    title App
+    link(href="/assets/stylesheets/main.css", rel='stylesheet', type='text/css')
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+
+  body
+    #wrap
+      .navbar.navbar-default.navbar-fixed-top
+        .navbar-header
+          a(href='/').navbar-brand Admin
+        .collapse.navbar-collapse
+          .navbar-right
+            p.navbar-text Signed In
+            a.btn.btn-default.navbar-btn(href='/logout') Logout
+              
+      .container
+        .row.l_left-row
+          .col-md-12
+            h1 Administrative Interface
+
+        .row.l_title-container.s_title-container.l_left-row
+          .col-md-2
+            .list-group
+              - var route = route || ''
+              a.list-group-item(href='/admin', class=route === 'admin' ? 'active' : '') Users
+              //- example link for other resources you may later add
+              a.list-group-item(href='#') Other Things
+          .col-md-10
+            
+            //- yield content
+            block content
+        
+    #footer
+      .container.l_footer-container.s_footer-container
+        p &copy;2014 Abraham Lincoln: Web Developer

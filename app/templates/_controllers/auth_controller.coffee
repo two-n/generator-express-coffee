@@ -25,15 +25,21 @@ authController.newRegistration = (req, res) ->
   res.render 'public/signup'
 
 authController.createRegistration = (req, res) ->
-  user = new User
-    username: req.body.username
-    password: req.body.password
-  user.save (err) ->
-    if err
-      res.send 400, err
-    else
-      req.login user, (err) ->
-        res.redirect '/'
+  # if there are no admins, the new user is automatically an admin
+  User.count { isAdmin: true }, (err, count) ->
+    user = new User
+      username: req.body.username
+      password: req.body.password
+      isAdmin: count == 0
+
+    console.log count
+    console.log user
+    user.save (err) ->
+      if err
+        res.send 400, err
+      else
+        req.login user, (err) ->
+          res.redirect '/'
 
 authController.destroySession = (req, res) ->
   req.logOut()

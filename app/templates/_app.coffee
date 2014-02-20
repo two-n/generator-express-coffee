@@ -27,6 +27,11 @@ ensureAuthenticated = (req, res, next) ->
     return res.redirect '/login'
   next()
 
+ensureAdmin = (req, res, next) ->
+  unless req.user and req.user.isAdmin
+    return res.redirect '/login'
+  next()
+
 <% } %>  
 app = express()
 app.configure ->
@@ -45,7 +50,7 @@ app.configure ->
   app.use express.session secret: SESSION_SECRET
   app.use passport.initialize()
   app.use passport.session()
-  # assigin login rules after assigning static route
+  # assign login rules after assigning static route
   app.use ensureAuthenticated
 
   <% } %> 
@@ -66,6 +71,12 @@ app.get '/logout', authController.destroySession
 
 # account routes
 app.get '/account', accountController.index
+
+# admin
+app.get '/admin', ensureAdmin, adminController.index
+app.get '/admin/account/:id', ensureAdmin, adminController.showAccount
+app.post '/admin/account/:id/toggle_admin', ensureAdmin, adminController.toggleAdmin
+app.delete '/admin/account/:id', ensureAdmin, adminController.deleteAccount
 
 <% } %> 
 module.exports = app

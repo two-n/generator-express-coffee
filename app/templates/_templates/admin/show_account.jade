@@ -1,0 +1,26 @@
+extends layout
+
+block content
+
+  .panel.panel-default
+    .panel-heading User Info
+    .panel-body
+
+      p= 'Username: '
+        span= user.username
+      p= 'ID: '
+       span= user.id
+      p= 'Last Login: '
+        span= user.lastLogin
+      hr
+
+      h3 Status
+      p= 'Current Status: '
+        span= user.status
+      - var toggleAdminText = user.isAdmin ? 'Revoke Admin' : 'Make Admin'
+      a.btn.btn-info(href="/admin/account/#{user.id}/toggle_admin", method='put')= toggleAdminText
+      hr
+      h3 Actions
+      .btn-group
+        a.btn.btn-default Edit Password
+        a.btn.btn-danger Delete
