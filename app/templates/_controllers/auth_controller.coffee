@@ -10,7 +10,8 @@ passport.use new LocalStrategy (username, password, done) ->
     unless user then return done(err, false, { message: 'Username not found.' })
     user.comparePassword password, (err, isMatch) ->
       if isMatch
-        done null, user
+        user.updateLastLoginTime (err) ->
+          done err, user
       else
         done null, false, { message: 'Invalid Password' }
 
@@ -26,14 +27,13 @@ authController.newRegistration = (req, res) ->
 
 authController.createRegistration = (req, res) ->
   # if there are no admins, the new user is automatically an admin
-  User.count { isAdmin: true }, (err, count) ->
+  User.count { isAdmin: true }, (err, adminCount) ->
     user = new User
       username: req.body.username
       password: req.body.password
-      isAdmin: count == 0
+      
+    if adminCount == 0 then user.makeAdmin()
 
-    console.log count
-    console.log user
     user.save (err) ->
       if err
         res.send 400, err

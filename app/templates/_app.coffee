@@ -18,6 +18,7 @@ publicController = require './server/controllers/public_controller'
 # some controllers for admin/auth
 accountController = require './server/controllers/account_controller'
 authController = require './server/controllers/auth_controller'
+adminController = require './server/controllers/admin_controller'
 
 # login unless route in WHITELISTED_URLS
 # if not authorized, save the url in session and redirect to login

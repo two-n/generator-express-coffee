@@ -8,6 +8,11 @@ adminController.index = (req, res) ->
       users: _users
       route: 'admin'
 
+adminController.editPassword = (req, res) ->
+  User.findOne { _id: req.params.id }, (err, _user) ->
+    res.render 'admin/edit_password',
+      user: _user
+
 adminController.showAccount = (req, res) ->
   User.findOne { _id: req.params.id }, (err, _user) ->
     res.render 'admin/show_account',

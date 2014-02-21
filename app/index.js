@@ -82,8 +82,15 @@ BooterGenerator.prototype.app = function app() {
     // account
     this.copy('_controllers/account_controller.coffee', 'server/controllers/account_controller.coffee');
     this.mkdir('server/templates/account');
-    this.copy('_templates/account/layout.jade', 'server/templates//account/layout.jade');
-    this.copy('_templates/account/index.jade', 'server/templates//account/index.jade');
+    this.copy('_templates/account/layout.jade', 'server/templates/account/layout.jade');
+    this.copy('_templates/account/index.jade', 'server/templates/account/index.jade');
+
+    // admin
+    this.copy('_controllers/admin_controller.coffee', 'server/controllers/admin_controller.coffee');
+    this.mkdir('server/templates/admin');
+    this.copy('_templates/admin/layout.jade', 'server/templates/admin/layout.jade');
+    this.copy('_templates/admin/index.jade', 'server/templates/admin/index.jade');
+    this.copy('_templates/admin/show_account.jade', 'server/templates/admin/show_account.jade');
   }
   
   // *** CLIENT ***
