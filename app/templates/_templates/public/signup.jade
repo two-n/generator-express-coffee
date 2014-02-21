@@ -1,11 +1,19 @@
 extends layout
 
 block content
-  .row.l_title-container.s_title-container.l_left-row
-    .col-md-12
-      form.l_gatekeeper-form.s_gatekeeper-form(action='/signup', method='post')
-        h1.l_gatekeeper-header Sign Up
-        input.l_gatekeeper-input(type='text', name='username', placeholder='username')  
-        input.l_gatekeeper-input(type='password', name='password', placeholder='password')
-        input.btn.l_gatekeeper-button(type='submit', value='Sign Up')
-        a.l_signup-link.s_signup-link(href='/login') Login
+  .row
+    .col-md-4
+    .col-md-4
+      .panel.panel-primary.l_gatekeeper-panel
+        .panel-heading Sign Up
+        .panel-body
+          form(role='form', method='post', action='/signup')
+            .form-group
+              label(for='username1') Username
+              input.form-control#username1(type='text', name='username')
+            .form-group
+              label(for='password1') Password
+              input.form-control#password1(type='password', name='password')
+            button.btn.btn-primary.l_gatekeeper-button(type='submit') Sign Up
+            a(href='/login') Login
+    .col-md-4
