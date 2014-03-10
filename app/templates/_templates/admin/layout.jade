@@ -10,10 +10,6 @@ html
       .navbar.navbar-default.navbar-fixed-top
         .navbar-header
           a(href='/').navbar-brand Admin
-        .collapse.navbar-collapse
-          .navbar-right
-            p.navbar-text Signed In
-            a.btn.btn-default.navbar-btn(href='/logout') Logout
               
       .container
         .row.l_left-row
@@ -27,6 +23,7 @@ html
               a.list-group-item(href='/admin', class=route === 'admin' ? 'active' : '') Users
               //- example link for other resources you may later add
               a.list-group-item(href='#') Other Things
+              a.list-group-item(href='/logout') Logout
           .col-md-10
             
             //- yield content

@@ -91,6 +91,7 @@ BooterGenerator.prototype.app = function app() {
     this.copy('_templates/admin/layout.jade', 'server/templates/admin/layout.jade');
     this.copy('_templates/admin/index.jade', 'server/templates/admin/index.jade');
     this.copy('_templates/admin/show_account.jade', 'server/templates/admin/show_account.jade');
+    this.copy('_templates/admin/edit_password.jade', 'server/templates/admin/edit_password.jade');
   }
   
   // *** CLIENT ***

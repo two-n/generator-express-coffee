@@ -76,8 +76,10 @@ app.get '/account', accountController.index
 # admin
 app.get '/admin', ensureAdmin, adminController.index
 app.get '/admin/account/:id', ensureAdmin, adminController.showAccount
+app.get '/admin/account/:id/edit_password', ensureAdmin, adminController.editPassword
+app.post '/admin/account/:id/update_password', ensureAdmin, adminController.updatePassword
 app.post '/admin/account/:id/toggle_admin', ensureAdmin, adminController.toggleAdmin
-app.delete '/admin/account/:id', ensureAdmin, adminController.deleteAccount
+app.post '/admin/account/:id/delete_account', ensureAdmin, adminController.deleteAccount
 
 <% } %> 
 module.exports = app

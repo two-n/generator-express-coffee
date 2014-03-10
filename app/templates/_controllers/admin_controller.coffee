@@ -13,6 +13,12 @@ adminController.editPassword = (req, res) ->
     res.render 'admin/edit_password',
       user: _user
 
+adminController.updatePassword = (req, res) ->
+  User.findOne { _id: req.params.id }, (err, user) ->
+    user.password = req.body.password
+    user.save (err) ->
+      res.redirect "/admin/account/#{req.params.id}"
+
 adminController.showAccount = (req, res) ->
   User.findOne { _id: req.params.id }, (err, _user) ->
     res.render 'admin/show_account',
@@ -21,6 +27,14 @@ adminController.showAccount = (req, res) ->
 adminController.toggleAdmin = (req, res) ->
   User.findOne { _id: req.params.id }, (err, user) ->
     user.toggleAdminAndSave (err) ->
+      res.redirect "/admin/account/#{req.params.id}"
+
+adminController.deleteAccount = (req, res) ->
+  User.count {}, (err, count) ->
+    if count > 1
+      User.findByIdAndRemove req.params.id, ->
+        res.redirect "/admin"
+    else
       res.redirect "/admin/account/#{req.params.id}"
           
 module.exports = adminController

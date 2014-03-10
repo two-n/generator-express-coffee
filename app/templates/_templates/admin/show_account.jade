@@ -18,9 +18,12 @@ block content
       p= 'Current Status: '
         span= user.status
       - var toggleAdminText = user.isAdmin ? 'Revoke Admin' : 'Make Admin'
-      a.btn.btn-info(href="/admin/account/#{user.id}/toggle_admin", method='put')= toggleAdminText
+      form(action="/admin/account/#{user.id}/toggle_admin", method='post')
+        input.btn(type='submit', value=toggleAdminText)
       hr
       h3 Actions
       .btn-group
-        a.btn.btn-default Edit Password
-        a.btn.btn-danger Delete
+        form(action="/admin/account/#{user.id}/delete_account", method='post')
+          .btn-group
+            a.btn.btn-default(href="/admin/account/#{user.id}/edit_password") Edit Password
+            input.btn.btn-danger(type='submit', value='Delete Account')
