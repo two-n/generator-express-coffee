@@ -1,6 +1,6 @@
 {
   "name": "generator-express-coffee",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A Yeoman generator that makes a boilerplate express app, in CoffeeScript, with passport login.",
   "private": false,
   "keywords": [
