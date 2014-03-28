@@ -1,4 +1,3 @@
-
 A generator for [Yeoman](http://yeoman.io).
 
 #About
@@ -24,6 +23,10 @@ Time to actually create your app.  Create a directory for the app, and navigate 
     $ mkdir my_new_app
     $ cd my_new_app
     $ yo express-coffee:app
+    
+If you don't have MongoDB running on your machine, start it with
+
+    $ mongod
     
 Start your app in development environment on port 3000
 
