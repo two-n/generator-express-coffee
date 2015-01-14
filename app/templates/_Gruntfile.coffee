@@ -100,6 +100,8 @@ module.exports = (grunt) ->
         fs.readFileSync(path, 'utf8'), { client: true, compileDebug: false, filename: path }
       ).toString()
       tmplFileContents += "JST['#{namespace}'] = #{contents};\n"
+    
+    tmplFileContents += "return JST;\n});\n"
       
     fs.writeFileSync "#{JS_DEV_BUILD_PATH}/templates.js", tmplFileContents
         
